@@ -1,0 +1,28 @@
+<ion-header>
+
+	<ion-navbar>
+		<ion-title *ngIf="filme">{{ filme.title }}</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+	<ion-card *ngIf="filme">
+
+		<ion-item>
+			<ion-avatar item-start>
+				<img src="assets/imgs/marty-avatar.png">
+			</ion-avatar>
+			<h2>{{ filme.title }}</h2>
+			<p>{{ filme.release_date | date: "dd-MM-yyyy" }}</p>
+		</ion-item>
+
+		<img [src]="'https://image.tmdb.org/t/p/w500/' + filme.backdrop_path">
+
+		<ion-card-content text-justify>
+			<p>{{ filme.overview }}</p>
+		</ion-card-content>
+
+	</ion-card>
+</ion-content>

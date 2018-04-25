@@ -1,18 +1,50 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>{{ titulo }}</ion-title>
+	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+	<ion-card *ngFor="let filme of listaFilmes">
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+		<ion-item>
+			<h2>{{ filme.title }}</h2>
+			<p>{{ filme.release_date | date: "dd-MM-yyyy" }}</p>
+		</ion-item>
+
+		<img [src]="'https://image.tmdb.org/t/p/w500/' + filme.backdrop_path">
+
+		<ion-card-content text-justify>
+			<p>{{ filme.overview }}</p>
+		</ion-card-content>
+
+		<ion-row>
+			<ion-col text-center>
+				<button ion-button icon-left clear small>
+					<ion-icon name="star"></ion-icon>
+					<div>{{filme.vote_average }}</div>
+				</button>
+			</ion-col>
+			<ion-col text-center>
+				<button ion-button icon-left clear small>
+					<ion-icon name="person"></ion-icon>
+					<div>{{ filme.vote_count }}</div>
+				</button>
+			</ion-col>
+		</ion-row>
+
+		<button ion-button block (click)="abrirDetalhes(filme)">[+] Detalhes</button>
+
+	</ion-card>
+
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
 </ion-content>
